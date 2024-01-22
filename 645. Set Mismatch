@@ -1,0 +1,29 @@
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+      bool vis[10002]={false};
+      vector<int> ans;
+      for(int i=0;i<nums.size();i++)
+      {
+          if(vis[nums[i]]==true)
+          {
+              ans.push_back(nums[i]);
+          }
+          else
+          {
+              vis[nums[i]]=true;
+          }
+      }
+         for(int i=1;i<=nums.size();i++)
+      {
+          if(vis[i]==false)
+          {
+          ans.push_back(i);
+          break;
+
+          }
+      }
+
+    return ans;
+    }
+};
