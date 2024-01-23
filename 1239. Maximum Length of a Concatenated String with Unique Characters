@@ -1,0 +1,40 @@
+
+
+class Solution {
+public:
+    bool Unique(const string& str) {
+        bitset<26> charSet;
+        for (char ch : str) {
+            if (charSet[ch - 'a']) {
+                return false;
+            }
+            charSet.set(ch - 'a');
+        }
+        return true;
+    }
+
+    string helper(vector<string>& arr, int i, string s) {
+        if (i == arr.size()) {
+            return s;
+        }
+
+        string s1 = "";
+        string s2 = "";
+        if (Unique(arr[i] + s)) {
+            s1 = helper(arr, i + 1, arr[i] + s);
+        }
+        s2 = helper(arr, i + 1, s);
+
+        if (s1.size() > s2.size()) {
+            return s1;
+        } else {
+            return s2;
+        }
+    }
+
+    int maxLength(vector<string>& arr) {
+        string s = "";
+        string ans = helper(arr, 0, s);
+        return ans.size();
+    }
+};
