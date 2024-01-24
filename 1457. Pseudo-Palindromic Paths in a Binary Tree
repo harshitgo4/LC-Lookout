@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void helper(TreeNode* root, vector<int>& count, int& ans) {
+        if (root == nullptr) return;
+
+        count[root->val]++;
+        if (root->left == nullptr && root->right == nullptr) {
+            int oddCount = 0;
+            for (int i = 1; i <= 9; i++) {
+                if (count[i] % 2 == 1) oddCount++;
+            }
+            if (oddCount <= 1) ans++;
+        }
+
+        helper(root->left, count, ans);
+        helper(root->right, count, ans);
+        count[root->val]--;
+    }
+
+    int pseudoPalindromicPaths(TreeNode* root) {
+        if (root == nullptr) return 0;
+        vector<int> count(10, 0);
+        int ans = 0;
+        helper(root, count, ans);
+        return ans;
+    }
+};
