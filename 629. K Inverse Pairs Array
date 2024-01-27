@@ -1,0 +1,26 @@
+class Solution {
+public:
+    int arr[1001][1001];
+    int helper(int n,int k)
+    {
+        if(n==0)
+        return 0;
+        if(k==0)
+        return 1;
+        if(arr[n][k]!=-1)
+        return arr[n][k];
+        int res=0;
+        for(int i=0;i<=min(k,n-1);i++)
+        {
+            res=(res+helper(n-1,k-i))%1000000007;
+        }
+        arr[n][k]= res;
+        return arr[n][k];
+    }
+    int kInversePairs(int n, int k) {
+        if(k==0)
+        return 1;
+        memset(arr,-1,sizeof(arr));
+        return helper(n,k);
+    }
+};
