@@ -1,0 +1,26 @@
+class Solution {
+public:
+    long long dp[100001];
+    
+    long long helper(vector<vector<int>>& questions, long long index) {
+        if (index >= questions.size())
+            return 0;
+        if (dp[index] != -1)
+            return dp[index];
+        
+      
+        long long point = questions[index][0];
+        long long skip = questions[index][1];
+        
+        long long notake = helper(questions, index + 1);
+        long long take = point + helper(questions, index + skip + 1);
+        
+        dp[index] = max(take, notake);
+        return dp[index];
+    }
+    
+    long long mostPoints(vector<vector<int>>& questions) {
+        memset(dp, -1, sizeof(dp));
+        return helper(questions, 0);
+    }
+};
