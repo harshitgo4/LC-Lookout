@@ -1,0 +1,49 @@
+
+class Solution {
+public:
+    bool iscontain(unordered_map<int, int>& hmap, unordered_map<int, int>& temp) {
+        for (const auto& entry : temp) {
+            if (hmap[entry.first] < entry.second) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    string minWindow(string s, string t) {
+        unordered_map<int, int> temp;
+        unordered_map<int, int> hmap;
+
+        for (char ch : t) {
+            int index = (ch >= 'a' && ch <= 'z') ? ch - 'a' + 26 : ch - 'A';
+            temp[index]++;
+        }
+
+        int ans = 1e5;
+        int left = 0;
+        int right = 0;
+        int minLeft = 0;
+        int minRight = 0;
+
+        while (right < s.size()) {
+            char ch = s[right];
+            int index = (ch >= 'a' && ch <= 'z') ? ch - 'a' + 26 : ch - 'A';
+            hmap[index]++;
+            right++;
+
+            while (iscontain(hmap, temp)) {
+                if (ans > right - left) {
+                    ans = right - left;
+                    minLeft = left;
+                    minRight = right;
+                }
+                char leftCh = s[left];
+                int leftIndex = (leftCh >= 'a' && leftCh <= 'z') ? leftCh - 'a' + 26 : leftCh - 'A';
+                hmap[leftIndex]--;
+                left++;
+            }
+        }
+
+        return s.substr(minLeft, minRight - minLeft);
+    }
+};
