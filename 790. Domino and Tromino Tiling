@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int mod=1e9+7;
+    int numTilings(int n) {
+       // return 0;
+      //  vector<int> dp(n+1,0);
+        if(n<3)
+        return n;
+        vector<int> dp(n+1,0);
+        dp[0]=1;
+        dp[1]=2;
+        dp[2]=5;
+        for(int i=3;i<n;i++)
+        {  
+          int temp1=dp[i-1]%mod;
+          temp1=(temp1*2)%mod;
+          int temp2=dp[i-3]%mod;
+          dp[i]=(temp1+temp2)%mod;
+        }
+        return dp[n-1];
+
+    }
+};
