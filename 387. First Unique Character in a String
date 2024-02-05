@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int firstUniqChar(string s) {
+        vector<int> freq(26,-1); 
+        for(int i=0;i<s.size();i++)
+        {
+            int index=s[i]-'a';
+            if(freq[index]!=-2)
+            {   if(freq[index]==-1)
+                freq[index]=i;
+                else
+                freq[index]=-2;
+            }
+        }
+        int ans=1e5;
+        for(int i=0;i<26;i++)
+        {
+            if(freq[i]!=-2 && freq[i]!=-1)
+            ans=min(ans,freq[i]);
+        }
+        return ans==1e5?-1:ans;
+    }
+};
