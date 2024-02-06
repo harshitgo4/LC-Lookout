@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        vector<vector<string>> ans;
+        vector<bool> used(strs.size(),false);
+        vector<string> sorted=strs;
+        for(int i=0;i<strs.size();i++)
+        {
+            sort(sorted[i].begin(),sorted[i].end());
+        }
+        for(int i=0;i<strs.size();i++)
+        {  // int temp=i;
+            vector<string> v;
+            if(used[i])
+            continue;
+            else
+            {
+                string s=sorted[i];
+                v.push_back(strs[i]);
+                for(int j=i+1;j<strs.size();j++)
+                {
+                    string temp=sorted[j];
+                    if(used[i])
+                    continue;
+                   // sort(temp.begin(),temp.end());
+                    if(s==temp)
+                    {
+                    v.push_back(strs[j]);
+                    used[j]=true;
+                    }
+                }
+                ans.push_back(v);    
+            }
+        }
+        return ans;
+    }
+};
