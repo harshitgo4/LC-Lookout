@@ -1,0 +1,31 @@
+#include <vector>
+#include <algorithm> // for sort
+using namespace std;
+
+class Solution {
+public:
+    int maxEnvelopes(vector<vector<int>>& envelopes) {
+        if (envelopes.empty()) return 0;
+
+        sort(envelopes.begin(), envelopes.end(), [](const auto& a, const auto& b) {
+            if (a[0] == b[0]) return a[1] > b[1];
+            return a[0] < b[0];
+        });
+
+        int n = envelopes.size();
+        vector<int> dp;
+        dp.push_back(envelopes[0][1]);
+
+        for (int i = 1; i < n; ++i) {
+            int height = envelopes[i][1];
+            if (height > dp.back()) {
+                dp.push_back(height);
+            } else {
+                auto it = lower_bound(dp.begin(), dp.end(), height);
+                *it = height;
+            }
+        }
+
+        return dp.size();
+    }
+};
