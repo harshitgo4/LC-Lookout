@@ -1,0 +1,37 @@
+class Solution {
+public:
+    vector<int> largestDivisibleSubset(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<pair<int,int>> dp(nums.size(),{1,-1});
+        for(int i=1;i<nums.size();i++)
+        {
+            for(int j=0;j<i;j++)
+            {
+                if(nums[i]%nums[j]==0&&dp[i].first<dp[j].first+1)
+                {
+                    dp[i]={dp[j].first+1,j};
+                }
+            }
+        }
+        pair<int,int> mx={0,-1};
+        int thelastone=0;
+        for(int i=0;i<nums.size();i++)
+        {
+            if(mx.first<dp[i].first)
+            {
+                mx=dp[i];
+                thelastone=i;
+            }
+        }
+        int parindex=mx.second;
+         vector<int> ans;
+        ans.push_back(nums[thelastone]);
+        while(parindex!=-1)
+        {
+            int value=nums[parindex];
+            parindex=dp[parindex].second;
+            ans.push_back(value);
+        }
+        return ans;
+    }
+};
