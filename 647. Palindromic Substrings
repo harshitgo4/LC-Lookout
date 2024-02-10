@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int expand(string s, int i, int j) {
+        int count = 0;
+        while (i >= 0 && j < s.size() && s[i] == s[j]) {
+            i--;
+            j++;
+            count++;
+        }
+        return count;
+    }
+    
+    int countSubstrings(string s) {
+        int ans = 0;
+        for (int i = 0; i < s.size(); i++) {
+            ans++; // Single character is always a palindrome
+            ans += expand(s, i, i + 1); // Even-length palindromes
+            ans += expand(s, i, i);     // Odd-length palindromes
+        }
+        return ans;
+    }
+};
