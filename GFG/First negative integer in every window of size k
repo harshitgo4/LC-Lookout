@@ -1,0 +1,39 @@
+class Solution {
+public:
+   int helper(vector<vector<int>>& grid, int i, int r2, int r1,vector<vector<vector<int>>> &dp) {
+    // Ensure starting positions are within the grid bounds
+    if (i == grid.size() )
+        return 0;
+    if(dp[i][r1][r2]!=-1)
+    return dp[i][r1][r2];
+    int value = 0;
+    if (r2 == r1)
+        value = grid[i][r1];
+    else
+        value = grid[i][r1] + grid[i][r2];
+    
+    int ans = 0;
+    for (int k = r1 - 1; k < r1 + 2; k++) {
+    for (int j = r2 - 1; j < r2 + 2; j++)
+    {
+        if (k >= 0 && k < grid[0].size() && j >= 0 && j < grid[0].size()) {
+            // Recursively calculate the maximum cherries collected from the new positions.
+            ans = max(ans, helper(grid, i + 1, j, k,dp));
+        }
+    }
+}
+
+    
+    dp[i][r1][r2]= ans + value;
+    return dp[i][r1][r2];
+}
+
+int cherryPickup(vector<vector<int>>& grid) {
+    int n = grid.size();
+    int m = grid[0].size();
+    // Start picking cherries from the first row
+    vector<vector<vector<int>>> dp(n+1,vector<vector<int>>(m+1,vector<int>(m+1,-1)));
+    return helper(grid, 0, m - 1, 0,dp);
+}
+
+};
