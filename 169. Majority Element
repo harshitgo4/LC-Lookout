@@ -1,0 +1,30 @@
+#include<algorithm>
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+    sort(nums.begin(),nums.end());
+    int freq=1;
+    int max_frq=0;
+    int max=nums[0];
+    int i=0;
+    while(i<nums.size()-1)
+    {   freq=1;
+        while(nums[i]==nums[i+1])
+        {
+            freq++;    
+            i++;
+            if(i==nums.size()-1)
+            {
+                break;
+            }
+        }
+        if(max_frq<freq)
+        {
+            max_frq=freq;
+            max=nums[i];
+        }
+        i++;
+    }
+    return max;
+    }
+};
