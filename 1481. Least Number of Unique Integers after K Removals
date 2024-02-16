@@ -1,0 +1,36 @@
+class Solution {
+public:
+    static bool comp(pair<int,int> &p1,pair<int,int> &p2)
+    {
+        return p1.second<p2.second;
+    }
+    int findLeastNumOfUniqueInts(vector<int>& arr, int k) {
+      vector<pair<int,int>> v;
+      unordered_map<int,int> mp;
+      for(int i=0;i<arr.size();i++)
+      {
+          mp[arr[i]]++;
+      }  
+      for(auto it:mp)
+      {
+          v.push_back({it.first,it.second});
+      }
+        sort(v.begin(),v.end(),comp);
+        for(auto it:v)
+        {
+            cout<<it.second<<endl;
+        }
+        int i;
+        for( i=0;i<v.size();i++)
+        {
+            if(k>=v[i].second)
+            {
+                k=k-v[i].second;
+            }
+            else
+            break;
+        }
+
+      return v.size()-i;
+    }
+};
