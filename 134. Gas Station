@@ -1,0 +1,62 @@
+class Solution {
+public:
+    static bool comp(pair<int,int> &p1,pair<int,int> &p2)
+    {
+        return p1.second>p2.second;
+    }
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+      vector<pair<int,int>> greed;
+      int n=gas.size();
+      if(n==1)
+      {
+          return gas[0]>=cost[0]?0:-1;
+      }
+      for(int i=0;i<n;i++)
+      {
+          int diff=gas[i]-cost[i];
+          if(diff>0)
+          {
+              greed.push_back({i,diff});
+          }
+      }  
+      sort(greed.begin(),greed.end(),comp);
+      for(int i=0;i<greed.size();i++)
+      {     
+         // cout<<(greed[i].first)<<' '<<endl;
+          int index=greed[i].first;
+          int k=index;
+          int g=0;
+          int z=0;
+            while(k<n)
+            {
+                g+=gas[k]-cost[k];
+                if(g<0)
+                {
+                    z=1;
+                    break;
+                }
+                k++;
+
+            }
+            if(z==1)
+            continue;
+            else
+            k=0;
+            while(k<index)
+            {
+                 g+=gas[k]-cost[k];
+                   if(g<0)
+                {
+                    z=1;
+                    break;
+                }
+                k++;
+            }
+             if(z==1)
+            continue;
+            else
+            return k;
+      }
+      return -1;
+    }
+};
