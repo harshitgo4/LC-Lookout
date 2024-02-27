@@ -1,0 +1,36 @@
+class Solution {
+public:
+   
+    int candy(vector<int>& ratings) {
+        vector<int> v(ratings.size(),1);
+        int prev_rank=0;
+        for(int rank=1;rank<ratings.size();rank++)
+        {
+            if(ratings[prev_rank]>ratings[rank])
+            {   
+                int temp2=rank;
+               while(prev_rank>=0 && ratings[prev_rank]>ratings[rank] && v[prev_rank]<=v[rank])
+               {
+                   v[prev_rank]=v[rank]+1;
+                   rank--;
+                   prev_rank--;
+               }
+                rank=temp2;
+              //  prev_rank=temp2;
+            }
+            else if(ratings[prev_rank]<ratings[rank])
+            {
+                v[rank]=v[prev_rank]+1;
+                //prev_rank=rank;
+            }
+            prev_rank=rank;
+        }
+        int ans=0;
+        for(auto it:v)
+        {
+            cout<<it<<" ";
+            ans+=it;
+        }
+        return ans;
+    }
+};
