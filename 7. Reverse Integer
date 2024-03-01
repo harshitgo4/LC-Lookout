@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int reverse(int x) {
+        //2147483648
+        bool neg=false;
+        if(x<0)
+        neg=true;
+        int num=0;
+        x=abs(x);
+        long long ans=0;
+        while(x>0)
+        {
+            num=x%10;
+            x=x/10;
+            if((ans*10)>=2147483648)
+            return 0;
+            ans=ans*10+num;
+        }
+        if(neg)
+        return -1*ans;
+        else
+        return ans;
+    }
+};
